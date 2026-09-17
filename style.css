@@ -1,0 +1,425 @@
+/* =============================================================
+   Sommaire
+   1. Variables (design tokens)
+   2. Base
+   3. Mise en page : page, appli, hero, panneau
+   4. Composants : champ, bouton, alerte, pastille, récapitulatif
+   5. Utilitaires
+   6. Responsive et accessibilité
+   ============================================================= */
+
+
+/* ===== 1. Variables ===== */
+
+:root {
+    /* Couleurs */
+    --couleur-accent: #e8693d;
+    --couleur-accent-survol: #d4582d;
+    --couleur-accent-texte: #c2502a;
+    --couleur-accent-doux: #ffede5;
+    --couleur-accent-doux-survol: #ffe1d4;
+    --couleur-accent-halo: rgba(232, 105, 61, 0.18);
+
+    --couleur-fond: #fbe4d8;
+    --couleur-surface: #ffffff;
+    --couleur-texte: #2b2320;
+    --couleur-texte-doux: #8a7a73;
+
+    --couleur-erreur: #c62828;
+    --couleur-erreur-fond: #fdecea;
+    --couleur-succes: #2e7d4f;
+    --couleur-succes-fond: #e3f3e8;
+    --couleur-obligatoire: #d93025;
+
+    /* Typographie */
+    --police: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+    /* Formes */
+    --rayon-s: 12px;
+    --rayon-m: 16px;
+    --rayon-l: 36px;
+    --ombre-appli: 0 30px 60px -20px rgba(160, 70, 40, 0.35);
+    --ombre-bouton: 0 10px 20px -8px rgba(232, 105, 61, 0.6);
+
+    /* Espacements */
+    --espace-xs: 0.25rem;
+    --espace-s: 0.5rem;
+    --espace-m: 1rem;
+    --espace-l: 1.5rem;
+    --espace-xl: 2rem;
+
+    --transition: 0.2s ease;
+}
+
+
+/* ===== 2. Base ===== */
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--police);
+    line-height: 1.5;
+    color: var(--couleur-texte);
+    background:
+        radial-gradient(circle at 15% 10%, #ffd3bd 0, transparent 40%),
+        radial-gradient(circle at 85% 90%, #f5c6d0 0, transparent 40%),
+        var(--couleur-fond);
+    min-height: 100vh;
+}
+
+input,
+button {
+    font: inherit;
+}
+
+[tabindex="-1"]:focus {
+    outline: none;
+}
+
+
+/* ===== 3. Mise en page ===== */
+
+.page {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: var(--espace-xl) var(--espace-m);
+}
+
+.appli {
+    width: 100%;
+    max-width: 440px;
+    background-color: var(--couleur-surface);
+    border-radius: var(--rayon-l);
+    box-shadow: var(--ombre-appli);
+    overflow: hidden;
+}
+
+.hero {
+    height: 190px;
+    background-color: #ffc4a3;
+}
+
+.hero__illustration {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: bottom;
+}
+
+.panneau {
+    position: relative;
+    margin-top: calc(-1 * var(--rayon-l));
+    padding: var(--espace-xl) 1.75rem 2.25rem;
+    background-color: var(--couleur-surface);
+    border-radius: var(--rayon-l) var(--rayon-l) 0 0;
+}
+
+.panneau__titre {
+    font-size: 2.25rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--couleur-accent);
+}
+
+.panneau__sous-titre {
+    margin: var(--espace-xs) 0 var(--espace-l);
+    font-size: 0.9rem;
+    color: var(--couleur-texte-doux);
+}
+
+.formulaire {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espace-m);
+}
+
+.formulaire__ligne {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+
+/* ===== 4. Composants ===== */
+
+/* --- Champ --- */
+
+.champ {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 0;
+}
+
+.champ__libelle {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--couleur-accent-texte);
+}
+
+/* Astérisque ajoutée automatiquement aux champs portant l'attribut `required`.
+   Le texte alternatif vide ("/ """) évite que les lecteurs d'écran lisent « étoile » :
+   l'attribut required annonce déjà le caractère obligatoire. */
+.champ:has([required]) .champ__libelle::after,
+.asterisque {
+    color: var(--couleur-obligatoire);
+}
+
+.champ:has([required]) .champ__libelle::after {
+    margin-left: 0.2em;
+    content: "*";
+    content: "*" / "";
+}
+
+.champ__controle {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.champ__icone {
+    position: absolute;
+    left: 0.9rem;
+    width: 20px;
+    height: 20px;
+    opacity: 0.6;
+    pointer-events: none;
+    transition: opacity var(--transition);
+}
+
+.champ__saisie {
+    width: 100%;
+    min-height: 3.1rem;
+    padding: 0.8rem 1rem 0.8rem 2.9rem;
+    font-size: 0.95rem;
+    color: var(--couleur-texte);
+    background-color: var(--couleur-accent-doux);
+    border: 2px solid transparent;
+    border-radius: var(--rayon-m);
+    transition: background-color var(--transition), border-color var(--transition), box-shadow var(--transition);
+}
+
+.champ__saisie::placeholder {
+    color: var(--couleur-texte-doux);
+    opacity: 0.8;
+}
+
+.champ__saisie:hover {
+    background-color: var(--couleur-accent-doux-survol);
+}
+
+.champ__saisie:focus {
+    outline: none;
+    background-color: var(--couleur-surface);
+    border-color: var(--couleur-accent);
+    box-shadow: 0 0 0 4px var(--couleur-accent-halo);
+}
+
+.champ__controle:focus-within .champ__icone {
+    opacity: 1;
+}
+
+/* État invalide : piloté par l'attribut aria-invalid posé par le JavaScript */
+.champ__saisie[aria-invalid="true"] {
+    background-color: var(--couleur-erreur-fond);
+    border-color: var(--couleur-erreur);
+}
+
+.champ__saisie[aria-invalid="true"]:focus {
+    box-shadow: 0 0 0 4px rgba(198, 40, 40, 0.15);
+}
+
+.champ__erreur {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--couleur-erreur);
+}
+
+.champ__erreur:empty {
+    display: none;
+}
+
+/* --- Bouton --- */
+
+.bouton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.95rem var(--espace-m);
+    font-size: 1.15rem;
+    font-weight: 700;
+    border: 2px solid transparent;
+    border-radius: var(--rayon-m);
+    cursor: pointer;
+    transition: background-color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.bouton:focus-visible {
+    outline: 3px solid var(--couleur-accent-texte);
+    outline-offset: 3px;
+}
+
+.bouton:active {
+    transform: translateY(1px);
+}
+
+.bouton--principal {
+    margin-top: var(--espace-s);
+    color: #ffffff;
+    background-color: var(--couleur-accent);
+    box-shadow: var(--ombre-bouton);
+}
+
+.bouton--principal:hover {
+    background-color: var(--couleur-accent-survol);
+    transform: translateY(-2px);
+}
+
+.bouton--contour {
+    color: var(--couleur-accent-texte);
+    background-color: transparent;
+    border-color: var(--couleur-accent);
+}
+
+.bouton--contour:hover {
+    background-color: var(--couleur-accent-doux);
+}
+
+/* --- Alerte --- */
+
+.alerte {
+    margin-bottom: var(--espace-l);
+    padding: 0.9rem var(--espace-m);
+    font-size: 0.88rem;
+    border-radius: var(--rayon-m);
+}
+
+.alerte--erreur {
+    color: var(--couleur-erreur);
+    background-color: var(--couleur-erreur-fond);
+}
+
+.alerte__titre {
+    font-weight: 700;
+}
+
+.alerte__liste {
+    margin: var(--espace-xs) 0 0 1.1rem;
+}
+
+/* --- Pastille de succès --- */
+
+.pastille-succes {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    margin-bottom: var(--espace-m);
+    background-color: var(--couleur-succes-fond);
+    border-radius: 50%;
+}
+
+.pastille-succes__icone {
+    width: 28px;
+    height: 28px;
+}
+
+/* --- Récapitulatif --- */
+
+.recap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: var(--espace-l);
+}
+
+.recap__ligne {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--espace-m);
+    padding: 0.8rem var(--espace-m);
+    background-color: var(--couleur-accent-doux);
+    border-radius: var(--rayon-s);
+}
+
+.recap__libelle {
+    flex-shrink: 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--couleur-accent-texte);
+}
+
+.recap__valeur {
+    font-weight: 600;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+
+/* ===== 5. Utilitaires ===== */
+
+[hidden] {
+    display: none !important;
+}
+
+
+/* ===== 6. Responsive et accessibilité ===== */
+
+/* Mobile : l'application occupe tout l'écran */
+@media (max-width: 480px) {
+    .page {
+        padding: 0;
+        place-items: stretch;
+    }
+
+    .appli {
+        max-width: none;
+        min-height: 100vh;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .panneau {
+        padding-inline: 1.25rem;
+    }
+
+    .panneau__titre {
+        font-size: 2rem;
+    }
+}
+
+/* Très petits écrans : une seule colonne partout */
+@media (max-width: 360px) {
+    .formulaire__ligne {
+        grid-template-columns: 1fr;
+        gap: var(--espace-m);
+    }
+
+    .recap__ligne {
+        flex-direction: column;
+        gap: 0.1rem;
+    }
+
+    .recap__valeur {
+        text-align: left;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+    }
+}
