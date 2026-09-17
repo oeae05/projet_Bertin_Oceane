@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Formulaire d'inscription">
+    <meta name="theme-color" content="#e8693d">
+    <title>S'inscrire</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <main class="page">
+        <div class="appli">
+
+            <!-- Illustration décorative -->
+            <header class="hero">
+                <img class="hero__illustration" src="assets/illustrations/paysage.svg" alt="">
+            </header>
+
+            <!-- Vue 1 : formulaire d'inscription -->
+            <section class="panneau" id="vue-formulaire" aria-labelledby="titre-formulaire">
+                <h1 class="panneau__titre" id="titre-formulaire">S'inscrire</h1>
+                <p class="panneau__sous-titre">Les champs marqués d'un astérisque (<span class="asterisque">*</span>) sont obligatoires.</p>
+
+                <div class="alerte alerte--erreur" id="alerte-formulaire" role="alert" hidden>
+                    <p class="alerte__titre" id="alerte-titre"></p>
+                    <ul class="alerte__liste" id="alerte-liste"></ul>
+                </div>
+
+                <form class="formulaire" id="formulaire-inscription" novalidate>
+
+                    <div class="champ">
+                        <label class="champ__libelle" for="login">Login</label>
+                        <div class="champ__controle">
+                            <img class="champ__icone" src="assets/icones/utilisateur.svg" alt="">
+                            <input class="champ__saisie" type="text" id="login" name="login"
+                                   autocomplete="username" placeholder="Votre identifiant"
+                                   aria-describedby="erreur-login" required>
+                        </div>
+                        <p class="champ__erreur" id="erreur-login"></p>
+                    </div>
+
+                    <div class="champ">
+                        <label class="champ__libelle" for="motdepasse">Mot de passe</label>
+                        <div class="champ__controle">
+                            <img class="champ__icone" src="assets/icones/cadenas.svg" alt="">
+                            <input class="champ__saisie" type="password" id="motdepasse" name="motdepasse"
+                                   autocomplete="new-password" placeholder="••••••••"
+                                   aria-describedby="erreur-motdepasse" required>
+                        </div>
+                        <p class="champ__erreur" id="erreur-motdepasse"></p>
+                    </div>
+
+                    <div class="champ">
+                        <label class="champ__libelle" for="confirmation">Confirmation du mot de passe</label>
+                        <div class="champ__controle">
+                            <img class="champ__icone" src="assets/icones/cadenas.svg" alt="">
+                            <input class="champ__saisie" type="password" id="confirmation" name="confirmation"
+                                   autocomplete="new-password" placeholder="••••••••"
+                                   aria-describedby="erreur-confirmation" required>
+                        </div>
+                        <p class="champ__erreur" id="erreur-confirmation"></p>
+                    </div>
+
+                    <div class="formulaire__ligne">
+                        <div class="champ">
+                            <label class="champ__libelle" for="nom">Nom</label>
+                            <div class="champ__controle">
+                                <img class="champ__icone" src="assets/icones/identite.svg" alt="">
+                                <input class="champ__saisie" type="text" id="nom" name="nom"
+                                       autocomplete="family-name" placeholder="Dupont"
+                                       aria-describedby="erreur-nom" required>
+                            </div>
+                            <p class="champ__erreur" id="erreur-nom"></p>
+                        </div>
+
+                        <div class="champ">
+                            <label class="champ__libelle" for="prenom">Prénom</label>
+                            <div class="champ__controle">
+                                <img class="champ__icone" src="assets/icones/identite.svg" alt="">
+                                <input class="champ__saisie" type="text" id="prenom" name="prenom"
+                                       autocomplete="given-name" placeholder="Marie"
+                                       aria-describedby="erreur-prenom" required>
+                            </div>
+                            <p class="champ__erreur" id="erreur-prenom"></p>
+                        </div>
+                    </div>
+
+                    <div class="champ">
+                        <label class="champ__libelle" for="adresse">Adresse</label>
+                        <div class="champ__controle">
+                            <img class="champ__icone" src="assets/icones/adresse.svg" alt="">
+                            <input class="champ__saisie" type="text" id="adresse" name="adresse"
+                                   autocomplete="street-address" placeholder="12 rue des Lilas, Paris"
+                                   aria-describedby="erreur-adresse" required>
+                        </div>
+                        <p class="champ__erreur" id="erreur-adresse"></p>
+                    </div>
+
+                    <div class="champ">
+                        <label class="champ__libelle" for="email">Email</label>
+                        <div class="champ__controle">
+                            <img class="champ__icone" src="assets/icones/email.svg" alt="">
+                            <input class="champ__saisie" type="email" id="email" name="email"
+                                   autocomplete="email" placeholder="nom@domaine.fr"
+                                   aria-describedby="erreur-email" required>
+                        </div>
+                        <p class="champ__erreur" id="erreur-email"></p>
+                    </div>
+
+                    <div class="champ">
+                        <label class="champ__libelle" for="telephone">Téléphone</label>
+                        <div class="champ__controle">
+                            <img class="champ__icone" src="assets/icones/telephone.svg" alt="">
+                            <input class="champ__saisie" type="text" id="telephone" name="telephone"
+                                   autocomplete="tel" inputmode="tel" placeholder="06 12 34 56 78"
+                                   aria-describedby="erreur-telephone" required>
+                        </div>
+                        <p class="champ__erreur" id="erreur-telephone"></p>
+                    </div>
+
+                    <div class="champ">
+                        <label class="champ__libelle" for="naissance">Date de naissance</label>
+                        <div class="champ__controle">
+                            <img class="champ__icone" src="assets/icones/calendrier.svg" alt="">
+                            <input class="champ__saisie" type="date" id="naissance" name="naissance"
+                                   autocomplete="bday"
+                                   aria-describedby="erreur-naissance" required>
+                        </div>
+                        <p class="champ__erreur" id="erreur-naissance"></p>
+                    </div>
+
+                    <button class="bouton bouton--principal" type="submit">S'inscrire</button>
+                </form>
+            </section>
+
+            <!-- Vue 2 : récapitulatif -->
+            <section class="panneau" id="vue-recap" aria-labelledby="titre-recap" hidden>
+                <div class="pastille-succes">
+                    <img class="pastille-succes__icone" src="assets/icones/valide.svg" alt="">
+                </div>
+                <h1 class="panneau__titre" id="titre-recap" tabindex="-1"></h1>
+                <p class="panneau__sous-titre">Votre inscription est confirmée. Voici vos informations.</p>
+
+                <dl class="recap" id="liste-recap"></dl>
+
+                <button class="bouton bouton--contour" type="button" id="bouton-modifier">Modifier mes informations</button>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Modèle d'une ligne du récapitulatif, cloné par script.js -->
+    <template id="modele-ligne-recap">
+        <div class="recap__ligne">
+            <dt class="recap__libelle"></dt>
+            <dd class="recap__valeur"></dd>
+        </div>
+    </template>
+
+</body>
+</html>
